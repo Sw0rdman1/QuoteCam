@@ -1,62 +1,63 @@
-import { View, Text, Button, Image, StyleSheet, Alert } from 'react-native';
+import { View, Text, Button, Image, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function HomeScreen() {
   const [image, setImage] = useState<string | null>(null);
   const router = useRouter();
 
-  const handlePickOrCapture = async () => {
-    Alert.alert('Select Image', 'Choose an image source', [
-      {
-        text: 'Camera',
-        onPress: async () => {
-          const permission = await ImagePicker.requestCameraPermissionsAsync();
-          if (!permission.granted) {
-            Alert.alert('Permission Denied', 'Camera access is required.');
-            return;
-          }
+  const handleCamera = async () => {
+    const permission = await ImagePicker.requestCameraPermissionsAsync();
+    if (!permission.granted) {
+      Alert.alert('Permission Denied', 'Camera access is required.');
+      return;
+    }
 
-          const result = await ImagePicker.launchCameraAsync({
-            mediaTypes: ['images'],
-            allowsEditing: true,
-            quality: 1,
-          });
+    const result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      quality: 1,
+    });
 
-          if (!result.canceled) {
-            const uri = result.assets[0].uri;
-            setImage(uri);
-            router.push({ pathname: '/editor', params: { imageUri: uri } });
-          }
-        },
-      },
-      {
-        text: 'Gallery',
-        onPress: async () => {
-          const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ['images'],
-            allowsEditing: true,
-            quality: 1,
-          });
+    if (!result.canceled) {
+      const uri = result.assets[0].uri;
+      setImage(uri);
+      router.push({ pathname: '/editor', params: { imageUri: uri } });
+    }
+  }
 
-          if (!result.canceled) {
-            const uri = result.assets[0].uri;
-            setImage(uri);
-            router.push({ pathname: '/editor', params: { imageUri: uri } });
-          }
-        },
-      },
-      { text: 'Cancel', style: 'cancel' },
-    ]);
+  const handleGalleryAccess = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      const uri = result.assets[0].uri;
+      setImage(uri);
+      router.push({ pathname: '/editor', params: { imageUri: uri } });
+    }
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to QuoteCam 📸</Text>
-      <Button title="Pick or Capture Image" onPress={handlePickOrCapture} />
-      {image && <Image source={{ uri: image }} style={styles.preview} />}
-    </View>
+      <Text style={styles.title}>
+        Select an image to create a quote 📸
+      </Text>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={handleCamera}>
+          <Ionicons name="camera" size={24} color="black" />
+          <Text style={styles.buttonText}>Camera</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleGalleryAccess}>
+          <Ionicons name="image" size={24} color="black" />
+          <Text style={styles.buttonText}>Gallery</Text>
+        </TouchableOpacity>
+      </View>
+    </View >
   );
 }
 
@@ -67,16 +68,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 16
   },
-
   title: {
     fontSize: 20,
-    marginBottom: 16
+    marginBottom: 32
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  button: {
+    backgroundColor: 'white',
+    padding: 16,
+    borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 8,
+  },
+  buttonText: {
+    color: 'black',
+    marginLeft: 8,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 
-  preview: {
-    width: 200,
-    height: 200,
-    marginTop: 20,
-    borderRadius: 8
-  },
 });
