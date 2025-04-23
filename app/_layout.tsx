@@ -5,7 +5,8 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-
+import { PlayfairDisplay_600SemiBold_Italic } from '@expo-google-fonts/playfair-display';
+import { Lato_400Regular } from '@expo-google-fonts/lato';
 import { useColorScheme } from '@/components/useColorScheme';
 import { StatusBar } from 'expo-status-bar';
 
@@ -24,7 +25,8 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    ...FontAwesome.font,
+    Lato_400Regular,
+    PlayfairDisplay_600SemiBold_Italic,
   });
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -48,6 +50,7 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
+
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <StatusBar style="dark" />
@@ -56,8 +59,14 @@ function RootLayoutNav() {
           headerStyle: { backgroundColor: '#fff' },
           headerTitleStyle: { fontWeight: 'bold' },
           headerTintColor: '#333',
+          headerBackButtonDisplayMode: 'minimal',
         }}
-      />
+      >
+        <Stack.Screen name="index" options={{ headerTitle: 'QuoteCam' }} />
+        <Stack.Screen name='editor' options={{ headerTitle: 'Customize Your Quote' }} />
+        <Stack.Screen name='share' options={{ headerTitle: 'Share' }} />
+
+      </Stack>
     </ThemeProvider>
   );
 }

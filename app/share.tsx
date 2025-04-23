@@ -78,19 +78,71 @@ export default function ShareScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 16, alignItems: 'center', justifyContent: 'center' },
-    title: { fontSize: 20, marginBottom: 16 },
-    imageWrapper: { width: 300, height: 300, position: 'relative' },
-    image: { width: '100%', height: '100%', borderRadius: 8 },
+    container: {
+        flex: 1,
+        padding: 24,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#f8f8f8',
+    },
+    title: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        color: '#333',
+    },
+    imageWrapper: {
+        width: 320,
+        height: 320,
+        borderRadius: 16,
+        overflow: 'hidden',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 8,
+        elevation: 8,
+        backgroundColor: '#00000010',
+        position: 'relative',
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+    },
     overlay: {
         position: 'absolute',
-        padding: 10,
-        backgroundColor: 'rgba(0,0,0,0.4)',
-        borderRadius: 6,
+        padding: 14,
+        borderRadius: 12,
+        backgroundColor: 'rgba(0, 0, 0, 0.35)',
     },
-    top: { top: 10, left: 10, right: 10 },
-    center: { top: '40%' },
-    bottom: { bottom: 10, left: 10, right: 10 },
-    quoteText: { color: 'white', fontSize: 16, fontStyle: 'italic', textAlign: 'center' },
-    quoteAuthor: { color: '#ccc', fontSize: 14, textAlign: 'right', marginTop: 4 },
+    top: {
+        top: 20,
+        left: 20,
+        right: 20,
+    },
+    center: {
+        top: '40%',
+        left: 20,
+        right: 20,
+        transform: [{ translateY: -50 }],
+    },
+    bottom: {
+        bottom: 20,
+        left: 20,
+        right: 20,
+    },
+    quoteText: {
+        fontSize: 18,
+        fontStyle: 'italic',
+        textAlign: 'center',
+        color: '#fff',
+        lineHeight: 24,
+    },
+    quoteAuthor: {
+        fontSize: 14,
+        color: '#e0e0e0',
+        marginTop: 8,
+        textAlign: 'right',
+        fontStyle: 'normal',
+    },
 });
+
