@@ -62,7 +62,7 @@ function RootLayoutNav() {
           headerBackButtonDisplayMode: 'minimal',
         }}
       >
-        <Stack.Screen name="index" options={{ headerTitle: 'QuoteCam' }} />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name='editor' options={{ headerTitle: 'Customize Your Quote' }} />
         <Stack.Screen name='share' options={{ headerTitle: 'Share' }} />
 

@@ -37,49 +37,59 @@ export default function EditorScreen() {
         </View>
       </View>
 
-      <Text style={styles.label}>🧭 Position</Text>
-      <View style={styles.row}>
-        {['top', 'center', 'bottom'].map((pos) => (
-          <TouchableOpacity
-            key={pos}
-            onPress={() => setPosition(pos as any)}
-            style={[styles.button, position === pos && styles.activeButton]}
-          >
-            <Text style={styles.buttonText}>{pos}</Text>
-          </TouchableOpacity>
-        ))}
+      <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', }}>
+        <Text style={styles.label}>🧭 Position</Text>
+        <View style={styles.row}>
+          {['top', 'center', 'bottom'].map((pos) => (
+            <TouchableOpacity
+              key={pos}
+              onPress={() => setPosition(pos as any)}
+              style={[styles.button, position === pos && styles.activeButton]}
+            >
+              <Text style={[styles.buttonText, position === pos && styles.activeButtonText]}>
+                {pos.charAt(0).toUpperCase() + pos.slice(1)}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
 
-      <Text style={styles.label}>🎨 Text Color</Text>
-      <View style={styles.row}>
-        {['#ffffff', '#000000', '#ff69b4', '#00ffff', '#FFD700'].map((color) => (
-          <TouchableOpacity
-            key={color}
-            onPress={() => setTextColor(color)}
-            style={[
-              styles.colorButton,
-              { backgroundColor: color },
-              textColor === color && styles.selectedColor,
-            ]}
-          />
-        ))}
+      <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', }}>
+        <Text style={styles.label}>🎨 Text Color</Text>
+        <View style={styles.row}>
+          {['#ffffff', '#000000', '#ff69b4', '#00ffff', '#FFD700'].map((color) => (
+            <TouchableOpacity
+              key={color}
+              onPress={() => setTextColor(color)}
+              style={[
+                styles.colorButton,
+                { backgroundColor: color },
+                textColor === color && styles.selectedColor,
+              ]}
+            />
+          ))}
+        </View>
+      </View>
+      <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', }}>
+
+        <Text style={styles.label}>🔤 Font</Text>
+        <View style={styles.row}>
+          {['normal', 'serif', 'monospace'].map((f) => (
+            <TouchableOpacity
+              key={f}
+              onPress={() => setFont(f as any)}
+              style={[styles.button, font === f && styles.activeButton]}
+            >
+              <Text style={[styles.buttonText, font === f && styles.activeButtonText]}>
+                {f}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
 
-      <Text style={styles.label}>🔤 Font</Text>
-      <View style={styles.row}>
-        {['normal', 'serif', 'monospace'].map((f) => (
-          <TouchableOpacity
-            key={f}
-            onPress={() => setFont(f as any)}
-            style={[styles.button, font === f && styles.activeButton]}
-          >
-            <Text style={styles.buttonText}>{f}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-
-      <Button
-        title="Next: Share"
+      <TouchableOpacity
+        style={[styles.shareButton, { marginTop: 20 }]}
         onPress={() =>
           router.push({
             pathname: '/share',
@@ -92,7 +102,9 @@ export default function EditorScreen() {
             },
           })
         }
-      />
+      >
+        <Text style={styles.shareTexts}>💾 Save & Share</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
@@ -140,14 +152,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   label: {
-    marginTop: 16,
     fontWeight: '600',
-    fontSize: 16,
+    fontSize: 20,
   },
   row: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 10,
     marginVertical: 8,
     alignItems: 'center',
   },
@@ -168,6 +178,10 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 14,
   },
+  activeButtonText: {
+    fontWeight: 'bold',
+    color: '#339af0',
+  },
   colorButton: {
     width: 32,
     height: 32,
@@ -177,7 +191,23 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   selectedColor: {
-    borderColor: '#000',
-    borderWidth: 3,
+    borderColor: '#339af0',
+    borderWidth: 2,
+  },
+  shareButton: {
+    backgroundColor: '#339af0',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  shareTexts: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    fontFamily: 'Lato_400Regular',
   },
 });
